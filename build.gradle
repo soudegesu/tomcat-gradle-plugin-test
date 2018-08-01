@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'com.bmuschko', name:'gradle-tomcat-plugin', version:'2.5'
+    }
+}
+
+ext {
+    tomcatVersion = '9.0.10'
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'com.bmuschko.tomcat'
+
+sourceSets {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    compile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.1'
+    compile group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
+
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
+    tomcat "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: "org.eclipse.jdt.core.compiler", module: "ecj"
+    }
+
+}
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    contextPath = 'exercise'
+}
+
