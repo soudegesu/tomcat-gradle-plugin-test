@@ -44,6 +44,6 @@ dependencies {
 tomcat {
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
     ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-    contextPath = 'exercise'
+    contextPath = 'soudegesu'
 }
 
